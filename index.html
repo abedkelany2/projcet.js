@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <link rel="shortcut icon" href="images/cf621dba-fa2e-4213-b086-b69bbb6125ef.png" type="image/png">
+
+    <style>
+        /* Reset + Base */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #f4f4f4; color: #333; line-height: 1.6; font-family: Arial, sans-serif; }
+
+        /* ====== Header / Navbar ====== */
+        header { position: sticky; top: 0; z-index: 50; background: #0f172a; color: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+        .nav {
+            max-width: 1100px; margin: 0 auto; padding: 14px 16px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .logo { font-weight: 700; font-size: 18px; color: #fff; letter-spacing: .3px; }
+        .burger { display: none; background: none; border: 0; color: #fff; font-size: 22px; cursor: pointer; }
+
+        .links { list-style: none; display: flex; gap: 10px; }
+        .links a {
+            color: #e5e7eb; text-decoration: none; padding: 8px 14px; border-radius: 8px; font-weight: 600; transition: background .2s;
+        }
+        .links a:hover { background: #1f2937; }
+        .links a.active { background: #2563eb; color: #fff; }
+
+        @media (max-width: 768px) {
+            .burger { display: block; }
+            .links {
+                position: absolute; left: 0; right: 0; top: 56px;
+                background: #0f172a; padding: 10px 0; flex-direction: column; display: none;
+            }
+            .links.open { display: flex; }
+            .links a { padding: 12px 16px; }
+        }
+
+        /* ====== Page content ====== */
+        .contacts {
+            background: #fff; padding: 20px; max-width: 600px; margin: 30px auto; border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .contacts h2 { margin-bottom: 15px; text-align: center; }
+        #contactList { list-style: none; }
+        #contactList li {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px; border-bottom: 1px solid #ddd;
+        }
+        #contactList button {
+            background: #333; color: #fff; padding: 6px 12px; border: none; border-radius: 5px; cursor: pointer;
+        }
+        #contactList button:hover { background: #555; }
+
+        .buttons { text-align: center; margin-top: 15px; }
+        .buttons button {
+            background: #007BFF; color: #fff; padding: 8px 15px; border: none; border-radius: 5px; margin: 5px; cursor: pointer;
+        }
+        .buttons button:hover { background: #0056b3; }
+
+        /* ====== Popups ====== */
+        .popup-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+            display: none; justify-content: center; align-items: center;
+        }
+        .popup {
+            background: #fff; padding: 20px; border-radius: 8px; text-align: center; max-width: 320px; width: 92%;
+        }
+        .popup img {
+            width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 10px;
+        }
+        .popup button {
+            background: #333; color: #fff; padding: 6px 12px; margin-top: 10px; border: none; border-radius: 5px; cursor: pointer;
+        }
+        .popup button:hover { background: #555; }
+        .popup textarea { width: 100%; min-height: 90px; padding: 8px; border: 1px solid #ddd; border-radius: 6px; }
+
+        /* ====== Footer ====== */
+        footer { background: #333; color: #fff; text-align: center; padding: 10px; margin-top: 30px; }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navbar -->
+    <header>
+        <div class="nav">
+            <div class="logo">Contact Directory</div>
+            <button class="burger" aria-label="Toggle menu" onclick="document.querySelector('.links').classList.toggle('open')">&#9776;</button>
+            <ul class="links">
+                <li><a href="index.html">path1</a></li>
+                <li><a href="index2.html">path2</a></li>
+                <li><a href="index3.html">path3</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <section class="contacts">
+            <h2>Contact List</h2>
+            <ul id="contactList">
+                <li>
+                    John Smith
+                    <button onclick="showDetails('John Smith', '050-1111111', 'john@example.com', 'https://randomuser.me/api/portraits/men/1.jpg')">Show Details</button>
+                </li>
+                <li>
+                    Sarah Williams
+                    <button onclick="showDetails('Sarah Williams', '052-2222222', 'sarah@example.com', 'https://randomuser.me/api/portraits/women/2.jpg')">Show Details</button>
+                </li>
+                <li>
+                    Michael Johnson
+                    <button onclick="showDetails('Michael Johnson', '053-3333333', 'michael@example.com', 'https://randomuser.me/api/portraits/men/3.jpg')">Show Details</button>
+                </li>
+            </ul>
+            <div class="buttons">
+                <button onclick="openAddForm()">Add Contact</button>
+                <button onclick="openContactForm()">Contact Us</button>
+            </div>
+        </section>
+
+        <!-- Details Popup -->
+        <div class="popup-overlay" id="popup">
+            <div class="popup">
+                <img id="popup-img" src="" alt="Contact Image">
+                <h3>Contact Details</h3>
+                <p><strong>Name:</strong> <span id="popup-name"></span></p>
+                <p><strong>Phone:</strong> <span id="popup-phone"></span></p>
+                <p><strong>Email:</strong> <span id="popup-email"></span></p>
+                <button onclick="closePopup()">Close</button>
+            </div>
+        </div>
+
+        <!-- Add Contact Form -->
+        <div class="popup-overlay" id="addForm">
+            <div class="popup">
+                <h3>Add Contact</h3>
+                <input type="text" id="add-name" placeholder="Name"><br><br>
+                <input type="text" id="add-phone" placeholder="Phone"><br><br>
+                <input type="email" id="add-email" placeholder="Email"><br><br>
+                <input type="text" id="add-img" placeholder="Image URL (optional)"><br><br>
+                <button onclick="submitAddForm()">Add</button>
+                <button onclick="closeAddForm()">Close</button>
+            </div>
+        </div>
+
+        <!-- Contact Us Form -->
+        <div class="popup-overlay" id="contactForm">
+            <div class="popup">
+                <h3>Contact Us</h3>
+                <input type="text" id="user-name" placeholder="Your Name"><br><br>
+                <input type="email" id="user-email" placeholder="Your Email"><br><br>
+                <textarea id="user-message" placeholder="Your Message"></textarea><br><br>
+                <button onclick="submitForm()">Send</button>
+                <button onclick="closeContactForm()">Close</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 All rights reserved - Aya mahajne && haneen bdarnah</p>
+    </footer>
+
+    <script>
+        // Navbar: set active link by current page
+        (function setActiveNav() {
+            const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+            document.querySelectorAll('.links a').forEach(a => {
+                const target = a.getAttribute('href').toLowerCase();
+                if (target === path) a.classList.add('active');
+            });
+        })();
+
+        // Popups logic
+        function showDetails(name, phone, email, img) {
+            document.getElementById('popup-name').innerText = name;
+            document.getElementById('popup-phone').innerText = phone;
+            document.getElementById('popup-email').innerText = email;
+            document.getElementById('popup-img').src = img;
+            document.getElementById('popup').style.display = 'flex';
+        }
+        function closePopup() { document.getElementById('popup').style.display = 'none'; }
+
+        function openAddForm() { document.getElementById('addForm').style.display = 'flex'; }
+        function closeAddForm() { document.getElementById('addForm').style.display = 'none'; }
+
+        function openContactForm() { document.getElementById('contactForm').style.display = 'flex'; }
+        function closeContactForm() { document.getElementById('contactForm').style.display = 'none'; }
+
+        function submitAddForm() {
+            alert('Contact added! (dummy function)');
+            closeAddForm();
+        }
+        function submitForm() {
+            alert('Message sent! (dummy function)');
+            closeContactForm();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Contact List</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="images/cf621dba-fa2e-4213-b086-b69bbb6125ef.png" type="image/png">
+  <style>
+    /* ====== الهيدر ====== */
+    header {
+      background: #0f172a;
+      padding: 14px 0;
+      text-align: center;
+    }
+    nav a {
+      color: #e5e7eb;
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    nav a:hover {
+      background: #1f2937;
+    }
+
+    /* ====== تصميم الصفحة ====== */
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f7fa;
+      color: #333;
+      margin: 0;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    h2 {
+      color: #007acc;
+      margin-top: 1.5rem;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      max-width: 400px;
+      margin: 2rem auto;
+    }
+
+    ul li {
+      background: white;
+      padding: 1rem;
+      margin: 0.5rem 0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    ul li:hover {
+      background-color: #e6f2ff;
+    }
+
+    .popup-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .popup {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 350px;
+      text-align: left;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .popup h3 {
+      margin-top: 0;
+      color: #007acc;
+    }
+
+    .popup p {
+      margin: 0.5rem 0;
+    }
+
+    .popup button {
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .popup button:hover {
+      background-color: #cc0000;
+    }
+
+    footer {
+      background-color: #e1e1e1;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 600px) {
+      ul {
+        max-width: 90%;
+      }
+      ul li {
+        padding: 1rem;
+        font-size: 1rem;
+      }
+      .popup {
+        padding: 1.5rem;
+      }
+      .popup button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- الهيدر -->
+  <header>
+    <nav>
+      <a href="index.html">path1</a>
+      <a href="index2.html">path2</a>
+      <a href="index3.html">path3</a>
+    </nav>
+  </header>
+
+  <h2>Contacts List</h2>
+  <ul id="contactList">
+    <li>John Smith</li>
+    <li>Sarah Williams</li>
+    <li>Michael Johnson</li>
+  </ul>
+
+  <!-- Popup -->
+  <div id="popup" class="popup-overlay" style="display:none;">
+    <div class="popup">
+      <h3>Contact Details</h3>
+      <p><strong>Name:</strong> John Smith</p>
+      <p><strong>Phone:</strong> 050-1111111</p>
+      <p><strong>Email:</strong> john@example.com</p>
+      <button>❌ Close</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 All rights reserved - Aya mahajne && haneen bdarnah</p>
+  </footer>
+
+</body>
+</html>

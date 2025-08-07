@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Contacts List</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="images/cf621dba-fa2e-4213-b086-b69bbb6125ef.png" type="image/png">
+  <style>
+    /* ========== تصميم الهيدر ========== */
+    * {margin: 0; padding: 0; box-sizing: border-box;}
+    header {background: #0f172a; color: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.1);}
+    nav {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+    }
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+      color: #fff;
+    }
+    .burger {
+      display: none;
+      font-size: 22px;
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+    }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 10px;
+    }
+    .nav-links a {
+      color: #e5e7eb;
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .nav-links a:hover {
+      background: #1f2937;
+    }
+    .nav-links a.active {
+      background: #2563eb;
+      color: #fff;
+    }
+    @media (max-width: 768px) {
+      .burger {display: block;}
+      .nav-links {
+        width: 100%;
+        display: none;
+        flex-direction: column;
+        background: #0f172a;
+        padding: 10px 0;
+      }
+      .nav-links.open {display: flex;}
+      .nav-links a {padding: 12px;}
+    }
+
+    /* ========== تصميم الصفحة والكروت ========== */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f7fa;
+      color: #333;
+    }
+
+    h2 {
+      text-align: center;
+      color: #007acc;
+      margin-top: 1.5rem;
+    }
+
+    #contacts-list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .contact-card {
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      padding: 1.5rem;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeInCard 0.8s ease forwards;
+      width: 90%;
+      max-width: 500px;
+      margin: 1rem 0;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 35px rgba(0, 0, 0, 0.12);
+    }
+
+    .contact-card img.contact-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeInImg 1s ease forwards;
+    }
+
+    .contact-card h3 {
+      margin-top: 0;
+      color: #007acc;
+    }
+
+    .contact-card p {
+      margin: 0.5rem 0;
+    }
+
+    .contact-card button {
+      background-color: #007acc;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin: 0.5rem 0.3rem 0 0.3rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .contact-card button:hover {
+      background-color: #005f99;
+    }
+
+    #clearAllBtn,
+    #animationBtn {
+      background-color: #333;
+      color: white;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin: 1rem auto;
+      display: block;
+      transition: background-color 0.3s ease;
+    }
+
+    #clearAllBtn:hover,
+    #animationBtn:hover {
+      background-color: #555;
+    }
+
+    @keyframes fadeInCard {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInImg {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    footer {
+      background-color: #e1e1e1;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 600px) {
+      .contact-card {
+        padding: 1rem;
+      }
+
+      .contact-card button {
+        width: 100%;
+        margin: 0.3rem 0;
+      }
+
+      #clearAllBtn,
+      #animationBtn {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ✅ الهيدر -->
+  <header>
+    <nav>
+      <div class="logo">My Website</div>
+      <button class="burger" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
+      <ul class="nav-links">
+        <li><a href="index.html">path1</a></li>
+        <li><a href="index2.html" class="active">path2</a></li>
+        <li><a href="index3.html">path3</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ✅ المحتوى -->
+  <main style="padding: 20px;">
+    <h2>Contacts List</h2>
+    <div id="contacts-list"></div>
+    <button id="clearAllBtn" onclick="clearContacts()">Clear All Contacts</button>
+    <button onclick="showAnimation()" id="animationBtn">Animation</button>
+  </main>
+
+  <!-- ✅ الفوتر -->
+  <footer>
+    <p>&copy; 2025 All rights reserved - Aya mahajne && haneen bdarnah</p>
+  </footer>
+
+  <script src="js_2.js"></script>
+</body>
+</html>
